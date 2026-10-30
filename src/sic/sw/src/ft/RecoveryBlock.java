@@ -8,8 +8,8 @@ import sic.sw.src.basic.AbstractSortingAlgorithm;
 public class RecoveryBlock extends FTAbstractSortingAlgorithm {
 
   /**
-   * La activación del constructor de FTAbstractSortingAlgorithm ya instancia.
-   * Las versiones de los algoritmos de ordenación necesarias (revisar código).
+   * La activación del constructor de FTAbstractSortingAlgorithm ya instancia. Las
+   * versiones de los algoritmos de ordenación necesarias (revisar código).
    */
   public RecoveryBlock() {
     super();
@@ -41,8 +41,8 @@ public class RecoveryBlock extends FTAbstractSortingAlgorithm {
         // 8. Ejecutar la prueba de aceptación - 执行测试.
         // 8.1. Si la prueba de aceptación es exitosa, poner en setData de this y salir
         // del método - 测试成功则退出.
-        if (acceptanceTest(this.getData(), originalInput)) {
-          setData(this.getData());
+        if (acceptanceTest(algorithm.getData(), originalInput)) {
+          setData(algorithm.getData());
           return;
         } else {
           continue;
@@ -63,13 +63,25 @@ public class RecoveryBlock extends FTAbstractSortingAlgorithm {
    * @return true if the sorted data matches the original data, false otherwise.
    */
   private boolean acceptanceTest(int[] sortedData, int[] originalData) {
-    if (sortedData == null || sortedData.length == 0 || sortedData.length != originalData.length) {
+    if (sortedData == null || sortedData.length != originalData.length) {
       return false;
     }
+    // Revisión ordenada 有序检查
     for (int i = 0; i < sortedData.length - 1; i++) {
       if (sortedData[i] > sortedData[i + 1]) {
         return false;
       }
+    }
+    // Revisión suma 总和检查
+    long checkFlag = 0;
+    for (int i : sortedData) {
+      checkFlag += i;
+    }
+    for (int i : originalData) {
+      checkFlag -= i;
+    }
+    if (checkFlag != 0) {
+      return false;
     }
     return true;
   }
